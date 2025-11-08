@@ -1,18 +1,23 @@
 #include <Arduino.h>
 
-// put function declarations here:
-int myFunction(int, int);
+// led pin
+const int ledPin = 13;
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  // being serial
+  Serial.begin(115200);
+  Serial.println("Serial test begin.");
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
+  // echo received data
+  if (Serial.available()) {
+    int byteReceived = Serial.read();
+    Serial.write(byteReceived); // echo back the received byte
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+    // blink the built-in LED to indicate activity
+    digitalWrite(ledPin, HIGH);
+    delay(100);
+    digitalWrite(ledPin, LOW);
+  }
 }
